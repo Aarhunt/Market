@@ -1,0 +1,22 @@
+---
+- name: Set user background
+  copy:
+#    src: placeholder.png
+    src: "gehack-{{number}}.png"
+    dest: /usr/share/backgrounds/contestbackground.png
+    owner: root
+    group: root
+    mode: 0444
+
+- name: set desktop background and PREVENT AUTO-BLANKING
+  copy:
+    owner: root
+    group: root
+    mode: 0444
+    dest: "/etc/profile.d/session.sh"
+    content: |
+      #!/bin/bash
+      gsettings set org.gnome.desktop.background picture-uri file:///{{ background_location }}
+      gsettings set org.gnome.desktop.screensaver lock-enabled false
+      gsettings set org.gnome.desktop.lockdown disable-lock-screen true
+      gsettings set org.gnome.desktop.session idle-delay 0
